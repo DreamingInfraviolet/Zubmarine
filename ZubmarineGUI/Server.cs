@@ -37,27 +37,34 @@ namespace ZubmarineGUI
                                 SocketType.Stream, ProtocolType.Tcp);
 
             Console.WriteLine("Bound to port " + localEndPoint.Port);
+            newsock.Bind(localEndPoint);
+            newsock.Listen(10);
 
             while (true)
             {
-                newsock.Bind(localEndPoint);
-                newsock.Listen(10);
                 Socket client = newsock.Accept();
 
                 Console.WriteLine("Client connected " + client);
 
                 while (client.Connected)
                 {
-                    Console.WriteLine("Data recieved.");
+                    try
+                    {
+                        Console.WriteLine("Data recieved.");
 
-                    byte[] header = readSpecificAmount(client, 4);
-                    int len = BitConverter.ToInt32(header, 0);
-                    Console.WriteLine("Data len: " + len);
+                        byte[] header = readSpecificAmount(client, 4);
+                        int len = BitConverter.ToInt32(header, 0);
+                        Console.WriteLine("Data len: " + len);
 
-                    byte[] data = readSpecificAmount(client, len);
-                    var message = InputMessage.decodeData(data);
+                        byte[] data = readSpecificAmount(client, len);
+                        var message = InputMessage.decodeData(data);
 
-                    Console.WriteLine("Received: " + message.data);
+                        Console.WriteLine("Received: " + message.data);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Connection lost: " + e.ToString());
+                    }
                 }
 
                 Console.WriteLine("Lost client");
@@ -68,7 +75,7 @@ namespace ZubmarineGUI
         {
             int received = 0;
             byte[] data = new byte[amount];
-
+            
             while (received < amount)
             {
                 int leftToRead = amount - received;

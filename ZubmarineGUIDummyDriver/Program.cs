@@ -22,9 +22,7 @@ namespace ZubmarineGUIDummyDriver
             var address = IPAddress.Loopback;
             int port = int.Parse(ConfigurationManager.AppSettings["port"]);
             var endpoint = new IPEndPoint(address, port);
-            var socket = new Socket(AddressFamily.InterNetwork,
-                                    SocketType.Stream,
-                                    ProtocolType.Tcp);
+            Socket socket = null;
 
             do
             {
@@ -32,8 +30,11 @@ namespace ZubmarineGUIDummyDriver
                 {
                     try
                     {
-                        if (!socket.Connected)
+                        if (socket == null || !socket.Connected)
                         {
+                            socket = new Socket(AddressFamily.InterNetwork,
+                                    SocketType.Stream,
+                                    ProtocolType.Tcp);
                             socket.Connect(endpoint);
                         }
                     }
