@@ -51,22 +51,13 @@ namespace ZubmarineGUI
                     Console.WriteLine("Data recieved.");
 
                     byte[] header = readSpecificAmount(client, 4);
-
                     int len = BitConverter.ToInt32(header, 0);
                     Console.WriteLine("Data len: " + len);
 
                     byte[] data = readSpecificAmount(client, len);
+                    var message = InputMessage.decodeData(data);
 
-                    string datastr = System.Text.ASCIIEncoding.Default.GetString(data);
-                    Console.WriteLine("Received data: " + datastr);
-
-                    var message = decodeMessage(data);
-
-                    Console.WriteLine("Decoded: " + message);
-
-                    var decodedData = decodeData(message.data64);
-
-                    Console.WriteLine("Decoded data: " + decodedData);
+                    Console.WriteLine("Received: " + message.data);
                 }
 
                 Console.WriteLine("Lost client");
@@ -85,19 +76,6 @@ namespace ZubmarineGUI
             }
 
             return data;
-        }
-
-        InputMessage decodeMessage(byte[] data)
-        {
-            byte[] decryptedBytes = Crypto.Decrypt(data, "password");
-            byte[] decompressedBytes = Compression.DecompressLZMA(decryptedBytes);
-            string decompressed = Encoding.ASCII.GetString(decompressedBytes);
-            return JsonConvert.DeserializeObject<InputMessage>(decompressed);
-        }
-
-        string decodeData(string data)
-        {
-            return Encoding.ASCII.GetString(Convert.FromBase64String(data));
         }
     }
 }

@@ -64,41 +64,9 @@ namespace ZubmarineGUIDummyDriver
             var message = new InputMessage();
             var messageJson = JsonConvert.SerializeObject(message);
             message.type = InputMessage.MessageType.Test;
-            var datastr = "I am kawaii data!!!";
-            var data = Encoding.ASCII.GetBytes(datastr);
-            message.data64 = encodeData(data);
+            message.data = "I am kawaii data!!!";
 
-            return new byte[][] { encodeMessage(message) };
-        }
-        
-        /** Encrypts data and converts it to base64 */
-        static string encodeData(byte[] data)
-        {
-            return Convert.ToBase64String(data);
-        }
-
-        /** Converts message to json */
-        static byte[] encodeMessage(InputMessage message)
-        {
-            // Compress first and then encrypt, as the encryption
-            // entropy negates compression.
-            string messagestr = JsonConvert.SerializeObject(message);
-            byte[] messageData = Encoding.ASCII.GetBytes(messagestr);
-            
-            byte[] compressedMessageData = Compression.CompressLZMA(messageData);
-
-            byte[] encryptedMessageData = Crypto.Encrypt(compressedMessageData, "password");
-
-            int messagelen = encryptedMessageData.Length;
-            byte[] messageHeader = BitConverter.GetBytes(messagelen);
-
-            byte[] res = messageHeader.Concat(encryptedMessageData).ToArray();
-
-            Console.WriteLine("Before compression: " + messageData.Length);
-            Console.WriteLine("After compressedMessageData: " + compressedMessageData.Length);
-            Console.WriteLine("After encryption: " + encryptedMessageData.Length);
-
-            return res;
+            return new byte[][] { InputMessage.encodeHeaderData(message) };
         }
     }
 }
