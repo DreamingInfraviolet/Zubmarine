@@ -62,7 +62,7 @@ namespace ZubmarineGUIDummyDriver
 
         static byte[][] getMessages()
         {
-            var message = InputMessage.fromString("I am kawaii data!");
+            var message = InputMessage.fromString("I am kawaii data!", "test");
             return new byte[][] { InputMessage.encodeHeaderData(message) };
         }
     }

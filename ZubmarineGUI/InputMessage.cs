@@ -10,10 +10,12 @@ namespace ZubmarineGUI
 {
     public struct InputMessage
     {
-        private InputMessage(MessageType type, string data)
+        private InputMessage(MessageType type, string name, string payload)
         {
             this.type = type;
-            this.data = data;
+            this.data = new Dictionary<string, string>();
+            this.data["name"] = name;
+            this.data["payload"] = payload;
         }
 
         public enum MessageType
@@ -22,17 +24,18 @@ namespace ZubmarineGUI
         }
 
         public MessageType type;
-        public string data;
+        public Dictionary<string, string> data;
 
-        public static InputMessage fromString(string str)
+
+        public static InputMessage fromString(string str, string name)
         {
-            return new InputMessage(MessageType.String, str);
+            return new InputMessage(MessageType.String, name, str);
         }
 
         public string asString()
         {
             throwIfNotType(MessageType.String);
-            return data;
+            return data["payload"];
         }
 
         private void throwIfNotType(MessageType expected)
@@ -71,12 +74,22 @@ namespace ZubmarineGUI
 
         private void encodeData()
         {
-            data = Convert.ToBase64String(Encoding.ASCII.GetBytes(data));
+            var copy = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> entry in data)
+            {
+                copy[entry.Key] = Convert.ToBase64String(Encoding.ASCII.GetBytes(entry.Value));
+            }
+            data = copy;
         }
 
         private void decodeData()
         {
-            data = Encoding.ASCII.GetString(Convert.FromBase64String(data));
+            var copy = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> entry in data)
+            {
+                copy[entry.Key] = Encoding.ASCII.GetString(Convert.FromBase64String(entry.Value));
+            }
+            data = copy;
         }
     }
 }
