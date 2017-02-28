@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ZubmarineGUI
 {
-    public struct InputMessage
+    public struct LogMessage
     {
-        private InputMessage(MessageType type, string name, string payload)
+        private LogMessage(MessageType type, string name, string payload)
         {
             this.type = type;
             this.data = new Dictionary<string, string>();
@@ -27,9 +27,9 @@ namespace ZubmarineGUI
         public Dictionary<string, string> data;
 
 
-        public static InputMessage fromString(string str, string name)
+        public static LogMessage fromString(string str, string name)
         {
-            return new InputMessage(MessageType.String, name, str);
+            return new LogMessage(MessageType.String, name, str);
         }
 
         public string asString()
@@ -45,7 +45,7 @@ namespace ZubmarineGUI
                     + expected + ", found " + type);
         }
 
-        public static byte[] encodeHeaderData(InputMessage message)
+        public static byte[] encodeHeaderData(LogMessage message)
         {
             var oldData = message.data;
             message.encodeData();
@@ -62,12 +62,12 @@ namespace ZubmarineGUI
             return res;
         }
 
-        public static InputMessage decodeData(byte[] data)
+        public static LogMessage decodeData(byte[] data)
         {
             byte[] decryptedBytes = Crypto.Decrypt(data, "password");
             byte[] decompressedBytes = Compression.DecompressLZMA(decryptedBytes);
             string decompressed = Encoding.ASCII.GetString(decompressedBytes);
-            var obj = JsonConvert.DeserializeObject<InputMessage>(decompressed);
+            var obj = JsonConvert.DeserializeObject<LogMessage>(decompressed);
             obj.decodeData();
             return obj;
         }

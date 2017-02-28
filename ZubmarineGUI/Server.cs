@@ -57,7 +57,7 @@ namespace ZubmarineGUI
                         Console.WriteLine("Data len: " + len);
 
                         byte[] data = readSpecificAmount(client, len);
-                        var message = InputMessage.decodeData(data);
+                        var message = LogMessage.decodeData(data);
 
                         Console.WriteLine("Received: " + message.data);
                     }
