@@ -17,10 +17,9 @@ using LiveCharts.Wpf;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.IO;
 using Newtonsoft.Json;
 using System.IO.Compression;
+using CSCommon;
 
 namespace ZubmarineGUI
 {
@@ -108,8 +107,8 @@ namespace ZubmarineGUI
 
         InputMessage decodeMessage(byte[] data)
         {
-            byte[] decryptedBytes = Decrypt(data, "password");
-            byte[] decompressedBytes = DecompressLZMA(decryptedBytes);
+            byte[] decryptedBytes = Crypto.Decrypt(data, "password");
+            byte[] decompressedBytes = Compression.DecompressLZMA(decryptedBytes);
             string decompressed = Encoding.ASCII.GetString(decompressedBytes);
             return JsonConvert.DeserializeObject<InputMessage>(decompressed);
         }
@@ -118,66 +117,5 @@ namespace ZubmarineGUI
         {
             return Encoding.ASCII.GetString(Convert.FromBase64String(data));
         }
-
-        private static byte[] DecompressLZMA(byte[] data)
-        {
-            SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder();
-            MemoryStream input = new MemoryStream(data);
-            MemoryStream output = new MemoryStream();
-
-            // Read the decoder properties
-            byte[] properties = new byte[5];
-            input.Read(properties, 0, 5);
-
-            // Read in the decompress file size.
-            byte[] fileLengthBytes = new byte[8];
-            input.Read(fileLengthBytes, 0, 8);
-            long len = BitConverter.ToInt64(fileLengthBytes, 0);
-
-            coder.SetDecoderProperties(properties);
-            coder.Code(input, output, input.Length, len, null);
-            output.Flush();
-
-            return output.GetBuffer();
-        }
-
-        public static byte[] Decrypt(byte[] cipherTextBytesWithSaltAndIv, string passPhrase)
-        {
-            // Get the complete stream of bytes that represent:
-            // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
-            // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
-            var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
-            // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
-            var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
-            // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
-            var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
-
-            using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
-            {
-                var keyBytes = password.GetBytes(Keysize / 8);
-                using (var symmetricKey = new RijndaelManaged())
-                {
-                    symmetricKey.BlockSize = 256;
-                    symmetricKey.Mode = CipherMode.CBC;
-                    symmetricKey.Padding = PaddingMode.PKCS7;
-                    using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
-                    {
-                        using (var memoryStream = new MemoryStream(cipherTextBytes))
-                        {
-                            using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
-                            {
-                                var plainTextBytes = new byte[cipherTextBytes.Length];
-                                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-                                memoryStream.Close();
-                                cryptoStream.Close();
-                                return plainTextBytes;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
     }
 }

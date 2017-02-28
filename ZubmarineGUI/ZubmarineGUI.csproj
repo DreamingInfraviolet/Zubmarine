@@ -50,10 +50,6 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SevenZip, Version=4.12.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SevenZip.4.12.1\lib\net20\SevenZip.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -124,6 +120,12 @@
     <None Include="Maps\World.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSCommon\CSCommon.csproj">
+      <Project>{81635284-fa7f-4bad-b949-740af2772943}</Project>
+      <Name>CSCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
