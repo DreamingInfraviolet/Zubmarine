@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using CSCommon;
+using System.Configuration;
 
 namespace ZubmarineGUIDummyDriver
 {
@@ -19,7 +20,8 @@ namespace ZubmarineGUIDummyDriver
             Console.WriteLine("Press ESC to stop");
 
             var address = IPAddress.Loopback;
-            var endpoint = new IPEndPoint(address, 54361);
+            int port = int.Parse(ConfigurationManager.AppSettings["port"]);
+            var endpoint = new IPEndPoint(address, port);
             var socket = new Socket(AddressFamily.InterNetwork,
                                     SocketType.Stream,
                                     ProtocolType.Tcp);
@@ -97,12 +99,6 @@ namespace ZubmarineGUIDummyDriver
             Console.WriteLine("After encryption: " + encryptedMessageData.Length);
 
             return res;
-        }
-
-        public static string base64Encode(string plainText)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return Convert.ToBase64String(plainTextBytes);
         }
     }
 }
