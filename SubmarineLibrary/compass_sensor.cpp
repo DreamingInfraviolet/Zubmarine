@@ -5,9 +5,5 @@ namespace zubmarine
 {
 	namespace sensor
 	{
-		int CompassSensor::x()
-		{
-			return 3;
-		}
 	}
 }

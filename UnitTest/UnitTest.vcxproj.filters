@@ -29,5 +29,11 @@
     <ClCompile Include="unittest1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="typestest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input_abstraction_interface_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

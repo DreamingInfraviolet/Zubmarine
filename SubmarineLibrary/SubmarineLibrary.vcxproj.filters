@@ -13,11 +13,29 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Sensors">
-      <UniqueIdentifier>{02c78479-449f-4eae-82dc-7cbca040f0dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Sensors">
       <UniqueIdentifier>{8236e1b8-ea23-410b-9239-57524629640e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inputs">
+      <UniqueIdentifier>{ae96796c-4442-4188-89dc-ab474bf62d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inputs\Sensors">
+      <UniqueIdentifier>{02c78479-449f-4eae-82dc-7cbca040f0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputAbstractionInterface">
+      <UniqueIdentifier>{218e74ac-750f-4a00-9c9b-802fb3dd060e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{77bf999f-0a6b-44e4-a857-cd5850827fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HardwareLevel">
+      <UniqueIdentifier>{e04aa5d0-f970-4148-961d-04dfa1df103e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HardwareLevel">
+      <UniqueIdentifier>{eb698ee9-c99e-4bdc-a286-a4be12fb090d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EventLayer">
+      <UniqueIdentifier>{3afff83f-1e4c-4aa7-aa97-11fb9ffadbbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,9 +45,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -37,13 +52,43 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="isensor.h">
-      <Filter>Header Files\Sensors</Filter>
+      <Filter>Header Files\Inputs\Sensors</Filter>
     </ClInclude>
     <ClInclude Include="zubmarine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="compass_sensor.h">
-      <Filter>Header Files\Sensors</Filter>
+      <Filter>Header Files\Inputs\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="isensor_reading.h">
+      <Filter>Header Files\Inputs\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="iinput.h">
+      <Filter>Header Files\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAbstractionInterface.h">
+      <Filter>Header Files\InputAbstractionInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="ztypes.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="dummy_hardware_layer.h">
+      <Filter>Header Files\HardwareLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ahardwarelayer.h">
+      <Filter>Header Files\HardwareLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="rate.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="sensor_descriptor.h">
+      <Filter>Header Files\EventLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="hardware_event_queue.h">
+      <Filter>Header Files\EventLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="event_layer.h">
+      <Filter>Header Files\EventLayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="zubmarine.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dummy_hardware_layer.cpp">
+      <Filter>Source Files\HardwareLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

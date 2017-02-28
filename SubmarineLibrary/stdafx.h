@@ -5,12 +5,19 @@
 
 #pragma once
 
-#include "targetver.h"
-
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-
-
-
 // TODO: reference additional headers your program requires here
+
+#include "ztypes.h"
+
+#include <map>
+#include <vector>
+#include <memory>
+#include <thread>
+#include <atomic>
+#include <mutex>
+#include <chrono>
+#include <cassert>
+#include <deque>
+#include <array>
+#include <algorithm>
+#include <condition_variable>

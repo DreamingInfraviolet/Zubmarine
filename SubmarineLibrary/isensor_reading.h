@@ -1,5 +1,4 @@
 #pragma once
-#include "isensor.h"
 #include "export.h"
 
 namespace zubmarine
@@ -8,9 +7,8 @@ namespace zubmarine
 	{
 		namespace sensor
 		{
-			class ZUBMARINE_EXPORTS_API CompassSensor : public ISensor
+			class ZUBMARINE_EXPORTS_API ISensorReading
 			{
-			public:
 
 			};
 		}

@@ -155,12 +155,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="compass_sensor.h" />
+    <ClInclude Include="dummy_hardware_layer.h" />
+    <ClInclude Include="event_layer.h" />
     <ClInclude Include="export.h" />
+    <ClInclude Include="ahardwarelayer.h" />
+    <ClInclude Include="hardware_event_queue.h" />
+    <ClInclude Include="iinput.h" />
+    <ClInclude Include="InputAbstractionInterface.h" />
     <ClInclude Include="isensor.h" />
+    <ClInclude Include="isensor_reading.h" />
+    <ClInclude Include="rate.h" />
     <ClInclude Include="sensors.h" />
+    <ClInclude Include="sensor_descriptor.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ztypes.h" />
     <ClInclude Include="zubmarine.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="compass_sensor.cpp" />
@@ -178,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="dummy_hardware_layer.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="zubmarine.cpp" />
   </ItemGroup>
