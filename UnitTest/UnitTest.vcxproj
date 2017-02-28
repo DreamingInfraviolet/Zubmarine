@@ -154,6 +154,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="hardware_layer_test.cpp" />
     <ClCompile Include="input_abstraction_interface_test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -162,7 +163,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="typestest.cpp" />
-    <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SubmarineLibrary\SubmarineLibrary.vcxproj">

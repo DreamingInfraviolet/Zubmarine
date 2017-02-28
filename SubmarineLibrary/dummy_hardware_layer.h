@@ -24,6 +24,11 @@ namespace zubmarine
 
 		public:
 
+			virtual void stop() override
+			{
+				halt = true;
+			}
+
 			ZUBMARINE_EXPORTS_API DummyHardwareLayer(UpdateCallbackType callback, const util::Rate& rate);
 			ZUBMARINE_EXPORTS_API ~DummyHardwareLayer();
 

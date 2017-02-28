@@ -22,6 +22,8 @@ namespace zubmarine
 			  * An input slot is analogous to a device (e.g. compass, barometer, etc.) */
 			virtual i32 numberOfSlots() = 0;
 
+			virtual void stop() = 0;
+
 		protected:
 
 			UpdateCallbackType updateCallback;
