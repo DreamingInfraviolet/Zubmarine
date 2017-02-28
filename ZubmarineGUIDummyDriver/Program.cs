@@ -61,11 +61,7 @@ namespace ZubmarineGUIDummyDriver
 
         static byte[][] getMessages()
         {
-            var message = new InputMessage();
-            var messageJson = JsonConvert.SerializeObject(message);
-            message.type = InputMessage.MessageType.Test;
-            message.data = "I am kawaii data!!!";
-
+            var message = InputMessage.fromString("I am kawaii data!");
             return new byte[][] { InputMessage.encodeHeaderData(message) };
         }
     }

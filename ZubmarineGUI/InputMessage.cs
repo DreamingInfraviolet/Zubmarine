@@ -10,13 +10,37 @@ namespace ZubmarineGUI
 {
     public struct InputMessage
     {
+        private InputMessage(MessageType type, string data)
+        {
+            this.type = type;
+            this.data = data;
+        }
+
         public enum MessageType
         {
-            Test
+            String
         }
 
         public MessageType type;
         public string data;
+
+        public static InputMessage fromString(string str)
+        {
+            return new InputMessage(MessageType.String, str);
+        }
+
+        public string asString()
+        {
+            throwIfNotType(MessageType.String);
+            return data;
+        }
+
+        private void throwIfNotType(MessageType expected)
+        {
+            if (type != expected)
+                throw new ArgumentException("Expected message type to be "
+                    + expected + ", found " + type);
+        }
 
         public static byte[] encodeHeaderData(InputMessage message)
         {
